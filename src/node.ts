@@ -2,18 +2,28 @@
 import io from 'socket.io';
 
 // Types
+import type {
+  $Action,
+  $Params,
+  $Type,
+} from './types';
+
 export type $Config = {
   origin?: string | Array<string>;
   port: string;
 };
 
-class Server<C extends $Config, T extends Record<string, any>, P extends Record<string, any>> {
+class Server<
+C extends $Config,
+T extends Record<string, $Type>,
+P extends Record<string, $Action>,
+> {
   connection: {
-    on: (arg0: string, arg1: (arg0: {
+    on: (type: $Type, callback: (socket: {
       id: string;
     }) => void) => void;
-    listen: (arg0: number) => void;
-    emit: (arg0: string, arg1: Record<string, any>) => void;
+    listen: (port: number) => void;
+    emit: (type: $Type, params: $Params) => void;
   };
 
   port: number;

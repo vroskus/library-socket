@@ -2,17 +2,26 @@
 import io from 'socket.io-client';
 
 // Types
+import type {
+  $Action,
+  $Type,
+} from './types';
+
 export type $Config = {
   host: string;
 };
 
-class Client<C extends $Config, T extends Record<string, any>, P extends Record<string, any>> {
+class Client<
+C extends $Config,
+T extends Record<string, $Type>,
+P extends Record<string, $Action>,
+> {
   host: string;
 
   connection: {
     id: string;
-    on: (arg0: string, arg1: (arg0: Error) => void) => void;
-    removeListener: (arg0: string, arg1: (arg0: Error) => void) => void;
+    on: (type: $Type, action: $Action) => void;
+    removeListener: (type: $Type, action: $Action) => void;
   };
 
   type: T;
@@ -55,7 +64,7 @@ class Client<C extends $Config, T extends Record<string, any>, P extends Record<
     action,
     type,
   }: {
-    action: (params: P[SET]) => any;
+    action: (params: P[SET]) => unknown;
     type: SET;
   }) {
     if (this.host !== '') {
@@ -70,7 +79,7 @@ class Client<C extends $Config, T extends Record<string, any>, P extends Record<
     action,
     type,
   }: {
-    action: (params: P[SET]) => any;
+    action: (params: P[SET]) => unknown;
     type: SET;
   }) {
     if (this.host !== '') {
