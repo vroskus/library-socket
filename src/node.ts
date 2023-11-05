@@ -3,7 +3,6 @@ import io from 'socket.io';
 
 // Types
 import type {
-  $Action,
   $Params,
   $Type,
 } from './types';
@@ -16,7 +15,7 @@ export type $Config = {
 class Server<
 C extends $Config,
 T extends Record<string, $Type>,
-P extends Record<string, $Action>,
+P extends Record<string, Record<string, unknown>>,
 > {
   connection: {
     on: (type: $Type, callback: (socket: {
@@ -47,7 +46,7 @@ P extends Record<string, $Action>,
     this.connection.on(
       'connection',
       (socket) => {
-      // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console
         console.info(
           'Socket new connection',
           socket.id,

@@ -14,7 +14,7 @@ export type $Config = {
 class Client<
 C extends $Config,
 T extends Record<string, $Type>,
-P extends Record<string, $Action>,
+P extends Record<string, Record<string, unknown>>,
 > {
   host: string;
 
