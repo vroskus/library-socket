@@ -8,7 +8,7 @@ import type {
 } from './types';
 
 export type $Config = {
-  origin?: string | Array<string>;
+  origin?: Array<string> | string;
   port: string;
 };
 
@@ -18,11 +18,11 @@ T extends Record<string, $Type>,
 P extends Record<string, Record<string, unknown>>,
 > {
   connection: {
+    emit: (type: $Type, params: $Params) => void;
+    listen: (port: number) => void;
     on: (type: $Type, callback: (socket: {
       id: string;
     }) => void) => void;
-    listen: (port: number) => void;
-    emit: (type: $Type, params: $Params) => void;
   };
 
   port: number;
