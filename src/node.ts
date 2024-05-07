@@ -1,9 +1,10 @@
 // Helpers
-import io from 'socket.io';
+import {
+  Server,
+} from 'socket.io';
 
 // Types
 import type {
-  $Params,
   $Type,
 } from './types';
 
@@ -12,18 +13,12 @@ export type $Config = {
   port: string;
 };
 
-class Server<
+class SocketServer<
 C extends $Config,
 T extends Record<string, $Type>,
 P extends Record<string, Record<string, unknown>>,
 > {
-  connection: {
-    emit: (type: $Type, params: $Params) => void;
-    listen: (port: number) => void;
-    on: (type: $Type, callback: (socket: {
-      id: string;
-    }) => void) => void;
-  };
+  connection: Server;
 
   port: number;
 
@@ -35,8 +30,7 @@ P extends Record<string, Record<string, unknown>>,
   }: C, type: T) {
     this.port = Number(port) || 81;
 
-    // @ts-ignore
-    this.connection = io({
+    this.connection = new Server({
       cors: {
         methods: ['GET', 'POST'],
         origin,
@@ -88,4 +82,4 @@ P extends Record<string, Record<string, unknown>>,
   }
 }
 
-export default Server;
+export default SocketServer;
