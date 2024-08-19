@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.12.10",
+    "@types/node": "^22.4.1",
     "@types/socket.io": "^3.0.2",
     "@vroskus/eslint-config": "^1.0.11",
     "typescript": "^5.4.5"
