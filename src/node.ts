@@ -4,18 +4,16 @@ import {
 } from 'socket.io';
 
 // Types
-import type {
-  $Type,
-} from './types';
-
 export type $Config = {
   origin?: Array<string> | string;
   port: string;
 };
 
+const defaultPort: number = 81;
+
 class SocketServer<
 C extends $Config,
-T extends Record<string, $Type>,
+T extends Record<string, string>,
 P extends Record<string, Record<string, unknown>>,
 > {
   connection: Server;
@@ -28,7 +26,7 @@ P extends Record<string, Record<string, unknown>>,
     origin,
     port,
   }: C, type: T) {
-    this.port = Number(port) || 81;
+    this.port = Number(port) || defaultPort;
 
     this.connection = new Server({
       cors: {
@@ -40,7 +38,6 @@ P extends Record<string, Record<string, unknown>>,
     this.connection.on(
       'connection',
       (socket) => {
-        // eslint-disable-next-line no-console
         console.info(
           'Socket new connection',
           socket.id,
@@ -54,7 +51,6 @@ P extends Record<string, Record<string, unknown>>,
   listen() {
     this.connection.listen(this.port);
 
-    // eslint-disable-next-line no-console
     console.info(
       'Socket is listening on',
       this.port,
@@ -68,7 +64,6 @@ P extends Record<string, Record<string, unknown>>,
     params: P[SET];
     type: SET;
   }) {
-    // eslint-disable-next-line no-console
     console.info(
       'Socket emit',
       type,

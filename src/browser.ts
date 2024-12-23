@@ -7,10 +7,6 @@ import type {
 import io from 'socket.io-client';
 
 // Types
-import type {
-  $Type,
-} from './types';
-
 export type $Config = {
   host: string;
 };
@@ -19,7 +15,7 @@ type $Connection = Socket;
 
 class SocketClient<
 C extends $Config,
-T extends Record<string, $Type>,
+T extends Record<string, string>,
 P extends Record<string, Record<string, unknown>>,
 > {
   connection: $Connection | null;
@@ -44,7 +40,6 @@ P extends Record<string, Record<string, unknown>>,
         'connect',
         () => {
           if (this.connection !== null) {
-            // eslint-disable-next-line no-console
             console.info(
               'Socket new connection',
               this.connection.id,
@@ -59,7 +54,6 @@ P extends Record<string, Record<string, unknown>>,
           const error = err as Error | undefined;
 
           if (error) {
-            // eslint-disable-next-line no-console
             console.info(
               'Socket connection failed',
               error.message,
