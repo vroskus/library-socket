@@ -30,7 +30,10 @@ P extends Record<string, Record<string, unknown>>,
 
     this.connection = new Server({
       cors: {
-        methods: ['GET', 'POST'],
+        methods: [
+          'GET',
+          'POST',
+        ],
         origin,
       },
     });
